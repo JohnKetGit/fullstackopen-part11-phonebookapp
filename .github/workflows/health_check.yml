@@ -17,7 +17,7 @@ jobs:
       - name: Check the deployed service URL
         uses: jtalk/url-health-check-action@f3f7bd79e4a64218eea7caad72796a1443896aeb
         with:
-          url: https://pokedex-d0vl.onrender.com/
+          url: https://part11-phonebook.onrender.com
           # Follow redirects, or just report success on 3xx status codes
           follow-redirect: false # Optional, defaults to "no"
           # Fail this action after this many failed attempts
@@ -25,18 +25,18 @@ jobs:
           # Delay between retries
           retry-delay: 5s # Optional, only applicable to max-attempts > 1
 
-    #   - name: Discord notification success
-    #     uses: rjstone/discord-webhook-notify@v1
-    #     if: success()
-    #     with:
-    #         severity: info
-    #         details: Health check on https://pokedex-d0vl.onrender.com/ success
-    #         webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Discord notification success
+        uses: rjstone/discord-webhook-notify@v1
+        if: success()
+        with:
+            severity: info
+            details: Health check on https://part11-phonebook.onrender.com success
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
-    #   - name: Discord notification failure
-    #     uses: rjstone/discord-webhook-notify@v1
-    #     if: failure()
-    #     with:
-    #         severity: error
-    #         details: Health check on https://pokedex-d0vl.onrender.com/ failure
-    #         webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Discord notification failure
+        uses: rjstone/discord-webhook-notify@v1
+        if: failure()
+        with:
+            severity: error
+            details: Health check on https://part11-phonebook.onrender.com failure
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}

@@ -24,6 +24,10 @@ const requestLogger = (request, response, next) => {
 
 app.use(requestLogger)
 
+app.get('/version', (req, res) => {
+  res.send('1')
+})
+
 app.get('/health', (req, res) => {
   // throw 'error...'
   // // eslint-disable-next-line no-unreachable
