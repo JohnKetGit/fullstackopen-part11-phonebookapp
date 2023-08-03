@@ -24,6 +24,12 @@ const requestLogger = (request, response, next) => {
 
 app.use(requestLogger)
 
+app.get('/health', (req, res) => {
+  // throw 'error...'
+  // // eslint-disable-next-line no-unreachable
+  res.send('ok')
+})
+
 app.get('/info', (request, response) => {
   const date = new Date()
 
