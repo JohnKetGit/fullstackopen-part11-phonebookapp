@@ -1,5 +1,4 @@
 build
 .eslintrc.js
 mongo.js
-client
-dist
+/client
