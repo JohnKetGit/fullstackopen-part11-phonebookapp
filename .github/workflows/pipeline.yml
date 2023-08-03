@@ -28,40 +28,40 @@ jobs:
         if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
   
-#   tag_release:
-#     needs: simple_deployment_pipeline
-#     runs-on: ubuntu-20.04
-#     steps:
-#       - uses: actions/checkout@v3
-#       - name: Bump version and push tag
-#         if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
-#         # uses: anothrNick/github-tag-action@1.67.0
-#         uses: anothrNick/github-tag-action@a2c70ae13a881faf2b4953baaa9e49731997ab36
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#           DEFAULT_BUMP: patch
-#           # DRY_RUN: true
+  tag_release:
+    needs: simple_deployment_pipeline
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Bump version and push tag
+        if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
+        # uses: anothrNick/github-tag-action@1.67.0
+        uses: anothrNick/github-tag-action@a2c70ae13a881faf2b4953baaa9e49731997ab36
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
+          # DRY_RUN: true
 
-#   notify_success:
-#     name: Discord Webhook Notify - Success
-#     if: success()
-#     runs-on: ubuntu-20.04
-#     needs: simple_deployment_pipeline
-#     steps:
-#       - uses: rjstone/discord-webhook-notify@v1.0.4
-#         with:
-#           severity: info
-#           details: New commit ${{ github.event.commits[0].url }} by ${{ github.event.commits[0].committer.username }}
-#           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+  notify_success:
+    name: Discord Webhook Notify - Success
+    if: success()
+    runs-on: ubuntu-20.04
+    needs: simple_deployment_pipeline
+    steps:
+      - uses: rjstone/discord-webhook-notify@v1.0.4
+        with:
+          severity: info
+          details: New commit ${{ github.event.commits[0].url }} by ${{ github.event.commits[0].committer.username }}
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
-#   notify_failure:
-#     name: Discord Webhook Notify - Failure
-#     if: failure()
-#     runs-on: ubuntu-20.04
-#     needs: simple_deployment_pipeline
-#     steps:
-#       - uses: rjstone/discord-webhook-notify@v1.0.4
-#         with:
-#           severity: error
-#           details: Deployment failed! The commit ${{ github.event.commits[0].url }} by ${{ github.event.commits[0].committer.username }} broke something!
-#           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+  notify_failure:
+    name: Discord Webhook Notify - Failure
+    if: failure()
+    runs-on: ubuntu-20.04
+    needs: simple_deployment_pipeline
+    steps:
+      - uses: rjstone/discord-webhook-notify@v1.0.4
+        with:
+          severity: error
+          details: Deployment failed! The commit ${{ github.event.commits[0].url }} by ${{ github.event.commits[0].committer.username }} broke something!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
